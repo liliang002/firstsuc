@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+
+	<!-- 不需要登录的请求 
+	<package name="admin-base" extends="public-base" namespace="/admin/base">
+		<interceptors>
+			<interceptor-stack name="tokenSessionStack">
+				<interceptor-ref name="tokenSession">
+					<param name="includeMethods">login</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<action name="login" method="login"
+			class="com.wondertek.palmhall.web.action.UserAction">
+			<result name="loginSuccess" type="redirectAction">
+				<param name="namespace">/admin/pri</param>
+				<param name="actionName">user_home</param>
+			</result>
+			<result name="loginFail">/pages/admin/login.jsp</result>
+		</action>
+		<action name="authCode" class="com.wondertek.palmhall.web.action.UserAction"
+			method="authCode" />
+	</package>
+
+	需要登录的请求
+	<package name="admin_private" extends="private-base" namespace="/admin/pri">
+		<action name="user_*" method="{1}"
+			class="com.wondertek.palmhall.web.action.UserAction">
+			<result name="home">/pages/admin/pri/home/home.jsp</result>
+			<result name="menu">/pages/admin/pri/home/menu.jsp</result>
+		</action>
+
+		内容管理
+		<action name="category_*" method="{1}"
+			class="com.wondertek.palmhall.web.action.CategoryAction">
+			<result name="categories">/pages/admin/pri/content/categories.jsp</result>
+			<result name="category">/pages/admin/pri/content/category.jsp</result>
+		</action>
+		<action name="content_*" method="{1}"
+			class="com.wondertek.palmhall.web.action.ContentAction">
+			<result name="contents">/pages/admin/pri/content/contents.jsp</result>
+			<result name="content">/pages/admin/pri/content/content.jsp</result>
+		</action>
+
+		版本管理
+		<action name="clientver_*" method="{1}"
+			class="com.wondertek.palmhall.web.action.ClientVersionAction">
+			<result name="success">/pages/admin/pri/version/clientList.jsp</result>
+			<result name="input">/pages/admin/pri/version/upload.jsp</result>
+			<result name="upsuccess" type="redirectAction">
+				<param name="namespace">/admin/pri</param>
+				<param name="actionName">clientver_list.action</param>
+			</result>
+		</action>
+		
+		活动管理
+		<action name="drawact_*" method="{1}" class="com.wondertek.palmhall.web.action.DrawActivityAction">
+			<result name="list">/pages/admin/pri/draw/activities.jsp</result>
+			<result name="edit">/pages/admin/pri/draw/activity.jsp</result>
+			<result name="prizes">/pages/admin/pri/draw/prizes.jsp</result>
+			<result name="records">/pages/admin/pri/draw/records.jsp</result>
+		</action>
+		奖品管理
+		<action name="drawawd_*" method="{1}" class="com.wondertek.palmhall.web.action.DrawAwardAction">
+			<result name="list">/pages/admin/pri/draw/awards.jsp</result>
+			<result name="edit">/pages/admin/pri/draw/award.jsp</result>
+		</action>
+		产品管理
+		<action name="channel_*" method="{1}" class="com.wondertek.palmhall.web.action.ChannelAction">
+			<result name="list">/pages/admin/pri/channel/channels.jsp</result>
+			<result name="edit">/pages/admin/pri/channel/channel.jsp</result>
+		</action>
+		订购管理
+		<action name="order_*" method="{1}" class="com.wondertek.palmhall.web.action.OrderAction">
+			<result name="list">/pages/admin/pri/order/orders.jsp</result>
+			<result name="edit">/pages/admin/pri/order/order.jsp</result>
+		</action>
+		活动奖项
+		<action name="actawd_*" method="{1}" class="com.wondertek.palmhall.web.action.ActivityAwardAction">
+			<result name="list" type="redirectAction">
+				<param name="namespace">/admin/pri</param>
+				<param name="actionName">drawact_prizes</param>
+				<param name="model.id">${model.activity.id}</param>
+			</result>
+			<result name="edit">/pages/admin/pri/draw/prize.jsp</result>
+		</action>
+		消息推送
+		<action name="msg_*" method="{1}"
+			class="com.wondertek.palmhall.web.action.MessagePushWebAction">
+			<result name="listBlack">/pages/admin/pri/messagePush/listBlacklist.jsp
+			</result>
+			<result name="reloadBlack" type="redirectAction">
+				<param name="actionName">msg_listBlack.action</param>
+			</result>
+			<result name="editBlack">/pages/admin/pri/messagePush/editBlacklist.jsp
+			</result>
+
+			<result name="listMsg">/pages/admin/pri/messagePush/listMessage.jsp
+			</result>
+			<result name="addMsg">/pages/admin/pri/messagePush/addMessage.jsp
+			</result>
+			<result name="reloadMsg" type="redirectAction">
+				<param name="actionName">msg_listMsg.action</param>
+			</result>
+			<result name="editMsg">/pages/admin/pri/messagePush/addMessage.jsp
+			</result>
+
+			<result name="listReceiver">/pages/admin/pri/messagePush/listReceiver.jsp
+			</result>
+			<result name="reloadReceiver" type="redirectAction">
+				<param name="actionName">msg_listReceiver.action</param>
+			</result>
+			<result name="editReceiver">/pages/admin/pri/messagePush/editReceiver.jsp
+			</result>
+			
+			<result name="listTargetTag">/pages/admin/pri/messagePush/listTargetTag.jsp
+			</result>
+			<result name="reloadTargetTag" type="redirectAction">
+				<param name="actionName">msg_listTargetTag.action</param>
+			</result>
+			<result name="editTargetTag">/pages/admin/pri/messagePush/editTargetTag.jsp
+			</result>
+			<result name="importTagUser">/pages/admin/pri/messagePush/importTagUser.jsp
+			</result>
+			<result name="lookTagUser">/pages/admin/pri/messagePush/lookTagUser.jsp
+			</result>
+		</action>
+
+		页面模块管理
+		<action name="pageMng_*" method="{1}"
+			class="com.wondertek.palmhall.web.action.PageAction">
+			<result name="list">/pages/admin/pri/pageMng/list.jsp</result>
+			<result name="edit">/pages/admin/pri/pageMng/edit.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="namespace">/admin/pri</param>
+				<param name="actionName">pageMng_list.action</param>
+			</result>
+		</action>
+		
+		<action name="report_*" method="{1}" class="com.wondertek.palmhall.web.action.ReportAction">
+			<result name="unionpaySummary">/pages/admin/pri/report/unionpaySummary.jsp</result>
+			<result name="unionpayDetail">/pages/admin/pri/report/unionpayDetail.jsp</result>
+			<result name="cardDetail">/pages/admin/pri/report/cardDetail.jsp</result>
+			<result name="orderSummary">/pages/admin/pri/report/orderSummary.jsp</result>
+			<result name="orderDetail">/pages/admin/pri/report/orderDetail.jsp</result>
+			<result name="clientUsedInfo">/pages/admin/pri/report/clientUsedInfo.jsp</result>
+			<result name="activityParticipateInfo">/pages/admin/pri/report/activityParticipateInfo.jsp</result>
+			
+			<result name="SUCCESS" type="stream">
+				指定文件类型  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                指定显示的文件名  
+                <param name="contentDisposition">attachment;filename="${downloadFileName}"</param>  
+                指定文件输入流  
+                <param name="inputName">downloadFile</param>
+			</result>
+		</action>
+	</package> -->
+
+</struts>
